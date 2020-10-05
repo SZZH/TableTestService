@@ -8,6 +8,8 @@ app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-
 
 const data = []
 
+console.log(1)
+
 for(let i = 0; i < 100; i++) {
   data.push({
     id: Math.round((Math.random() + 10) * 100) + Date.now(),

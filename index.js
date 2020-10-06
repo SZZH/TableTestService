@@ -6,9 +6,16 @@ const app = express()
 app.use(bodyParser.json()) // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 
-const data = []
+let data = []
 
-console.log(1)
+data.push({
+  id: 1,
+  name: 'zh' + 1,
+  age: 21,
+  sex: 0,
+  time: '20200101',
+  twoTime: ['20200101', '20200202']
+})
 
 for(let i = 0; i < 100; i++) {
   data.push({
@@ -20,6 +27,16 @@ for(let i = 0; i < 100; i++) {
     twoTime: ['20200101', '20200202']
   })
 }
+
+app.post('/addItem', (req, res) => {
+  const input = req.body.input
+  data.push({
+    ...input
+  })
+
+  console.log(data.length, 'length')
+  res.send('success')
+})
 
 app.post('/getTableList', (request, response) => {
   const body = request.body
@@ -52,6 +69,13 @@ app.post('/getTableList', (request, response) => {
       total: data.length
     }
   })
+})
+
+app.post('/removeItem', (req, res) => {
+  const { input: { id } } = req.body
+  const result = data.filter(item => item.id !== id)
+  data = result
+  res.send('success')
 })
 
 app.listen(3333, (err) => {
